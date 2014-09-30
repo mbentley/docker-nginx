@@ -20,6 +20,7 @@ RUN (wget http://nginx.org/download/nginx-${NGINX_VER}.tar.gz -O /tmp/nginx-${NG
 RUN mkdir -p /var/lib/nginx /etc/nginx/sites-enabled /etc/nginx/sites-available /var/www
 
 ADD nginx.conf /etc/nginx/nginx.conf
+ADD php.conf /etc/nginx/php.conf
 ADD default /etc/nginx/sites-available/default
 
 VOLUME ["/var/log/nginx", "/var/www"]
