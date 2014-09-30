@@ -23,6 +23,8 @@ ADD nginx.conf /etc/nginx/nginx.conf
 ADD php.conf /etc/nginx/php.conf
 ADD default /etc/nginx/sites-available/default
 
+RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
 VOLUME ["/var/log/nginx", "/var/www"]
 EXPOSE 80
 CMD ["/usr/local/sbin/nginx","-c","/etc/nginx/nginx.conf"]
