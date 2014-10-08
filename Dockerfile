@@ -3,7 +3,7 @@ MAINTAINER Matt Bentley <mbentley@mbentley.net>
 RUN (echo "deb http://http.debian.net/debian/ jessie main contrib non-free" > /etc/apt/sources.list && echo "deb http://http.debian.net/debian/ jessie-updates main contrib non-free" >> /etc/apt/sources.list && echo "deb http://security.debian.org/ jessie/updates main contrib non-free" >> /etc/apt/sources.list)
 RUN apt-get update
 
-ENV NGINX_VER 1.7.5
+ENV NGINX_VER 1.7.6
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential libpcre3 libpcre3-dev libpcrecpp0 libssl-dev zlib1g-dev wget
 
@@ -24,6 +24,6 @@ ADD php.conf /etc/nginx/php.conf
 ADD default /etc/nginx/sites-available/default
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
-VOLUME ["/var/log/nginx", "/var/www"]
+VOLUME ["/var/log/nginx","/var/www"]
 EXPOSE 80
 CMD ["/usr/local/sbin/nginx","-c","/etc/nginx/nginx.conf"]
