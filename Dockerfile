@@ -7,7 +7,10 @@ RUN apk add --update ca-certificates nginx && rm -rf /var/cache/apk/* &&\
   mkdir /etc/nginx/sites-available /etc/nginx/sites-enabled &&\
   ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default &&\
   ln -sf /dev/stdout /var/log/nginx/access.log &&\
-  ln -sf /dev/stderr /var/log/nginx/error.log
+  ln -sf /dev/stderr /var/log/nginx/error.log &&\
+  deluser 33 &&\
+  addgroup -g 33 www-data &&\
+  adduser -D -u 33 -G www-data -s /sbin/nologin -H -h /var/www www-data
 
 COPY nginx.conf php.conf /etc/nginx/
 COPY default /etc/nginx/sites-available/default
