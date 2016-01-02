@@ -16,5 +16,6 @@ RUN apk add --update ca-certificates nginx && rm -rf /var/cache/apk/* &&\
 COPY nginx.conf php.conf /etc/nginx/
 COPY default /etc/nginx/sites-available/default
 
+VOLUME ["/var/lib/nginx/tmp"]
 EXPOSE 80 443
 CMD ["nginx","-c","/etc/nginx/nginx.conf"]
