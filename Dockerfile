@@ -1,9 +1,9 @@
 FROM alpine:latest
 MAINTAINER Matt Bentley <mbentley@mbentley.net>
 
-ENV NGINX_VER 1.8.0
+ENV NGINX_VER 1.8.1
 
-RUN apk add --update build-base ca-certificates openssl-dev pcre pcre-dev wget zlib-dev &&\
+RUN apk add --no-cache build-base ca-certificates openssl-dev pcre pcre-dev wget zlib-dev &&\
   wget http://nginx.org/download/nginx-${NGINX_VER}.tar.gz -O /tmp/nginx-${NGINX_VER}.tar.gz &&\
   cd /tmp &&\
   tar zxvf /tmp/nginx-${NGINX_VER}.tar.gz &&\
@@ -25,7 +25,7 @@ RUN apk add --update build-base ca-certificates openssl-dev pcre pcre-dev wget z
   deluser xfs &&\
   addgroup -g 33 www-data &&\
   adduser -D -u 33 -G www-data -s /sbin/nologin -H -h /var/www www-data &&\
-  apk del build-base openssl-dev pcre-dev wget zlib-dev && rm -rf /var/cache/apk/*
+  apk del build-base openssl-dev pcre-dev wget zlib-dev
 
 COPY nginx.conf php.conf /etc/nginx/
 COPY default /etc/nginx/sites-available/default
