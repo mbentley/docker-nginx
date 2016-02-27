@@ -1,7 +1,7 @@
 FROM alpine:latest
 MAINTAINER Matt Bentley <mbentley@mbentley.net>
 
-ENV NGINX_VER 1.8.1
+ENV NGINX_VER 1.9.11
 
 RUN apk add --no-cache build-base ca-certificates openssl-dev pcre pcre-dev wget zlib-dev &&\
   wget http://nginx.org/download/nginx-${NGINX_VER}.tar.gz -O /tmp/nginx-${NGINX_VER}.tar.gz &&\
