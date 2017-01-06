@@ -3,7 +3,7 @@ MAINTAINER Matt Bentley <mbentley@mbentley.net>
 
 ENV NGINX_VER 1.10.2
 
-RUN apk add --no-cache build-base ca-certificates openssl-dev pcre pcre-dev wget zlib-dev &&\
+RUN apk add --no-cache build-base ca-certificates libssl1.0 openssl-dev pcre pcre-dev wget zlib-dev &&\
   wget http://nginx.org/download/nginx-${NGINX_VER}.tar.gz -O /tmp/nginx-${NGINX_VER}.tar.gz &&\
   cd /tmp &&\
   tar zxvf /tmp/nginx-${NGINX_VER}.tar.gz &&\
