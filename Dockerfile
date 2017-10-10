@@ -29,7 +29,9 @@ RUN apk add --no-cache build-base ca-certificates libssl1.0 openssl-dev pcre pcr
 
 COPY nginx.conf php.conf /etc/nginx/
 COPY default /etc/nginx/sites-available/default
+COPY entrypoint.sh /entrypoint.sh
 
 VOLUME ["/var/lib/nginx"]
 EXPOSE 80 443
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["nginx","-c","/etc/nginx/nginx.conf"]
