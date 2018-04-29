@@ -3,16 +3,29 @@ MAINTAINER Matt Bentley <mbentley@mbentley.net>
 
 ENV NGINX_VER 1.13.12
 
-RUN apk add --no-cache build-base ca-certificates openssl-dev pcre-dev wget zlib-dev &&\
+# install build deps and then the runtime deps, download nginx source, compile, install, remove build deps
+RUN apk add --no-cache build-base ca-certificates openssl-dev pcre-dev wget zlib-dev musl openssl pcre zlib &&\
   wget http://nginx.org/download/nginx-${NGINX_VER}.tar.gz -O /tmp/nginx-${NGINX_VER}.tar.gz &&\
   cd /tmp &&\
   tar zxvf /tmp/nginx-${NGINX_VER}.tar.gz &&\
   cd /tmp/nginx-${NGINX_VER} &&\
-  ./configure --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log \
-    --pid-path=/nginx.pid --lock-path=/var/lock/nginx.lock --http-log-path=/var/log/nginx/access.log --with-http_dav_module \
-    --http-client-body-temp-path=/var/lib/nginx/body --with-http_ssl_module --with-http_realip_module \
-    --http-proxy-temp-path=/var/lib/nginx/proxy --with-http_stub_status_module --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
-    --with-http_auth_request_module --user=www-data --group=www-data &&\
+  ./configure \
+    --sbin-path=/usr/sbin/nginx \
+    --conf-path=/etc/nginx/nginx.conf \
+    --error-log-path=/var/log/nginx/error.log \
+    --pid-path=/nginx.pid \
+    --lock-path=/var/lock/nginx.lock \
+    --http-log-path=/var/log/nginx/access.log \
+    --with-http_dav_module \
+    --http-client-body-temp-path=/var/lib/nginx/body \
+    --with-http_ssl_module \
+    --with-http_realip_module \
+    --http-proxy-temp-path=/var/lib/nginx/proxy \
+    --with-http_stub_status_module \
+    --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
+    --with-http_auth_request_module \
+    --user=www-data \
+    --group=www-data &&\
   make &&\
   make install &&\
   rm /etc/nginx/*.default &&\
@@ -25,9 +38,10 @@ RUN apk add --no-cache build-base ca-certificates openssl-dev pcre-dev wget zlib
   deluser xfs &&\
   addgroup -g 33 www-data &&\
   adduser -D -u 33 -G www-data -s /sbin/nologin -H -h /var/www www-data &&\
-  apk del build-base openssl-dev pcre-dev wget zlib-dev &&\
-  apk add --no-cache musl openssl pcre zlib
+  chown -R www-data:www-data /var/www &&\
+  apk del build-base openssl-dev pcre-dev wget zlib-dev
 
+# include my default config files
 COPY nginx.conf php.conf /etc/nginx/
 COPY default /etc/nginx/sites-available/default
 COPY entrypoint.sh /entrypoint.sh
