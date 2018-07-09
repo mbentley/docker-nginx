@@ -24,6 +24,7 @@ RUN apk add --no-cache build-base ca-certificates openssl-dev pcre-dev wget zlib
     --with-http_stub_status_module \
     --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
     --with-http_auth_request_module \
+    --with-http_sub_module \
     --user=www-data \
     --group=www-data &&\
   make &&\
