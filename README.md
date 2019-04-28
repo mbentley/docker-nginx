@@ -1,5 +1,5 @@
 mbentley/nginx
-==================
+==============
 
 docker image for nginx
 based off of alpine:latest
