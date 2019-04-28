@@ -1,7 +1,7 @@
 FROM alpine:latest
 MAINTAINER Matt Bentley <mbentley@mbentley.net>
 
-ENV NGINX_VER 1.14.2
+ENV NGINX_VER 1.16.0
 
 # install build deps and then the runtime deps, download nginx source, compile, install, remove build deps
 RUN apk add --no-cache build-base ca-certificates openssl-dev pcre-dev wget zlib-dev musl openssl pcre zlib &&\
