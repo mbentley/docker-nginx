@@ -1,10 +1,15 @@
 FROM alpine:latest
 MAINTAINER Matt Bentley <mbentley@mbentley.net>
 
-ENV NGINX_VER 1.16.0
+# drop in a hacky script to get the latest version of stable nginx
+COPY get_nginx_latest_stable_version.sh /get_nginx_latest_stable_version.sh
 
 # install build deps and then the runtime deps, download nginx source, compile, install, remove build deps
-RUN apk add --no-cache build-base ca-certificates openssl-dev pcre-dev wget zlib-dev musl openssl pcre zlib &&\
+RUN apk add --no-cache bash curl jq &&\
+  NGINX_VER="$(/get_nginx_latest_stable_version.sh)" &&\
+  rm /get_nginx_latest_stable_version.sh &&\
+  apk del bash curl jq &&\
+  apk add --no-cache build-base ca-certificates openssl-dev pcre-dev wget zlib-dev musl openssl pcre zlib &&\
   wget http://nginx.org/download/nginx-${NGINX_VER}.tar.gz -O /tmp/nginx-${NGINX_VER}.tar.gz &&\
   cd /tmp &&\
   tar zxvf /tmp/nginx-${NGINX_VER}.tar.gz &&\
