@@ -52,7 +52,6 @@ COPY nginx.conf php.conf /etc/nginx/
 COPY default /etc/nginx/sites-available/default
 COPY entrypoint.sh /entrypoint.sh
 
-VOLUME ["/var/lib/nginx"]
 EXPOSE 80 443
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["nginx","-c","/etc/nginx/nginx.conf"]
