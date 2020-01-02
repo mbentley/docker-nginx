@@ -30,6 +30,7 @@ RUN apk add --no-cache bash curl jq &&\
     --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
     --with-http_auth_request_module \
     --with-http_sub_module \
+    --with-http_v2_module \
     --user=www-data \
     --group=www-data &&\
   make &&\
