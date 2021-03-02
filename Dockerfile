@@ -31,6 +31,8 @@ RUN apk add --no-cache bash curl jq &&\
     --with-http_auth_request_module \
     --with-http_sub_module \
     --with-http_v2_module \
+    --with-stream \
+    --with-stream_ssl_module \
     --user=www-data \
     --group=www-data &&\
   make &&\
@@ -38,7 +40,7 @@ RUN apk add --no-cache bash curl jq &&\
   rm /etc/nginx/*.default &&\
   cd / &&\
   rm -rf /tmp/nginx-${NGINX_VER} /tmp/nginx-${NGINX_VER}.tar.gz &&\
-  mkdir -p /var/lib/nginx /etc/nginx/sites-enabled /etc/nginx/sites-available /var/www &&\
+  mkdir -p /var/lib/nginx /etc/nginx/sites-enabled /etc/nginx/sites-available /etc/nginx/streams-enabled /etc/nginx/streams-available /var/www &&\
   ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default &&\
   ln -sf /dev/stdout /var/log/nginx/access.log &&\
   ln -sf /dev/stderr /var/log/nginx/error.log &&\
