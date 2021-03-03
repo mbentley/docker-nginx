@@ -9,7 +9,7 @@ RUN apk add --no-cache bash curl jq &&\
   NGINX_VER="$(/get_nginx_latest_stable_version.sh)" &&\
   rm /get_nginx_latest_stable_version.sh &&\
   apk del bash curl jq &&\
-  apk add --no-cache build-base ca-certificates openssl-dev pcre-dev wget zlib-dev musl openssl pcre zlib &&\
+  apk add --no-cache build-base ca-certificates linux-headers openssl-dev pcre-dev wget zlib-dev musl openssl pcre zlib &&\
   wget http://nginx.org/download/nginx-${NGINX_VER}.tar.gz -O /tmp/nginx-${NGINX_VER}.tar.gz &&\
   cd /tmp &&\
   tar zxvf /tmp/nginx-${NGINX_VER}.tar.gz &&\
@@ -28,11 +28,13 @@ RUN apk add --no-cache bash curl jq &&\
     --http-proxy-temp-path=/var/lib/nginx/proxy \
     --with-http_stub_status_module \
     --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
+    --with-file-aio \
     --with-http_auth_request_module \
     --with-http_sub_module \
     --with-http_v2_module \
     --with-stream \
     --with-stream_ssl_module \
+    --with-threads \
     --user=www-data \
     --group=www-data &&\
   make &&\
@@ -48,7 +50,7 @@ RUN apk add --no-cache bash curl jq &&\
   addgroup -g 33 www-data &&\
   adduser -D -u 33 -G www-data -s /sbin/nologin -H -h /var/www www-data &&\
   chown -R www-data:www-data /var/www &&\
-  apk del build-base openssl-dev pcre-dev wget zlib-dev
+  apk del build-base linux-headers openssl-dev pcre-dev wget zlib-dev
 
 # include my default config files
 COPY nginx.conf php.conf /etc/nginx/
