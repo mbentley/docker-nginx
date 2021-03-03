@@ -29,11 +29,18 @@ RUN apk add --no-cache bash curl jq &&\
     --with-http_stub_status_module \
     --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
     --with-file-aio \
+    --with-http_addition_module \
     --with-http_auth_request_module \
+    --with-http_flv_module \
+    --with-http_gunzip_module \
+    --with-http_gzip_static_module \
+    --with-http_mp4_module \
     --with-http_sub_module \
     --with-http_v2_module \
     --with-stream \
+    --with-stream_realip_module \
     --with-stream_ssl_module \
+    --with-stream_ssl_preread_module \
     --with-threads \
     --user=www-data \
     --group=www-data &&\
