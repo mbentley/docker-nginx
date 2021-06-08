@@ -1,6 +1,8 @@
 FROM alpine:latest
 MAINTAINER Matt Bentley <mbentley@mbentley.net>
 
+ARG NGINX_VER
+
 # drop in a hacky script to get the latest version of stable nginx
 COPY get_nginx_latest_stable_version.sh /get_nginx_latest_stable_version.sh
 
