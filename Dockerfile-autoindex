@@ -1,3 +1,0 @@
-FROM mbentley/nginx:latest
-
-COPY default-autoindex /etc/nginx/sites-available/default

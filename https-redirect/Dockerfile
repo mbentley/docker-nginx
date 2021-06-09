@@ -1,4 +1,4 @@
 FROM mbentley/nginx:latest
 MAINTAINER Matt Bentley <mbentley@mbentley.net>
 
-COPY default-https-redirect /etc/nginx/sites-available/default
+COPY default /etc/nginx/sites-available/default
