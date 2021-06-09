@@ -1,0 +1,8 @@
+server {
+        listen 80 default_server;
+        root /var/www;
+
+	location / {
+        	return 302 https://$http_host$request_uri;
+	}
+}
