@@ -55,7 +55,8 @@ RUN apk add --no-cache bash curl jq &&\
   ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default &&\
   ln -sf /dev/stdout /var/log/nginx/access.log &&\
   ln -sf /dev/stderr /var/log/nginx/error.log &&\
-  deluser xfs &&\
+  deluser $(grep ':33:' /etc/passwd | awk -F ':' '{print $1}') || true  &&\
+  delgroup $(grep '^www-data:' /etc/group | awk -F ':' '{print $1}') || true &&\
   addgroup -g 33 www-data &&\
   adduser -D -u 33 -G www-data -s /sbin/nologin -H -h /var/www www-data &&\
   chown -R www-data:www-data /var/www &&\
