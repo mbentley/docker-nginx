@@ -1,5 +1,5 @@
 FROM mbentley/nginx:latest
-MAINTAINER Matt Bentley <mbentley@mbentley.net>
+LABEL maintainer="Matt Bentley <mbentley@mbentley.net>"
 
 RUN echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories &&\
   apk add --no-cache bind-tools imagemagick@edge php7 php7-bz2 php7-ctype php7-curl php7-exif php7-fileinfo php7-gd php7-fpm php7-gettext php7-gmp php7-iconv php7-imagick php7-intl php7-imap php7-json php7-ldap php7-mbstring php7-mcrypt php7-memcached php7-mysqli php7-pecl-apcu php7-pecl-igbinary php7-pecl-imagick php7-pecl-redis php7-pdo php7-pdo_mysql php7-pdo_pgsql php7-pgsql php7-pcntl php7-posix php7-simplexml php7-xml php7-xmlreader php7-xmlwriter php7-zip s6 ssmtp wget whois &&\
