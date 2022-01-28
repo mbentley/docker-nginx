@@ -1,5 +1,4 @@
-mbentley/nginx-php7
-===================
+# mbentley/nginx-php7
 
 docker image for nginx + php7-fpm
 based off of mbentley/nginx

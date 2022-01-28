@@ -1,5 +1,4 @@
-mbentley/nginx-https-redirect
-=============================
+# mbentley/nginx-https-redirect
 
 docker image for redirecting traffic to https using nginx
 based off of mbentley/nginx:latest
