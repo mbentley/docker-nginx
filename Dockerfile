@@ -3,14 +3,15 @@ FROM mbentley/alpine:latest
 LABEL maintainer="Matt Bentley <mbentley@mbentley.net>"
 
 ARG NGINX_VER
+ARG NGINX_BRANCH=mainline
 
-# drop in a hacky script to get the latest version of stable nginx
-COPY get_nginx_latest_stable_version.sh /get_nginx_latest_stable_version.sh
+# drop in a hacky script to get the latest version of nginx
+COPY get_nginx_latest_version.sh /get_nginx_latest_version.sh
 
 # install build deps and then the runtime deps, download nginx source, compile, install, remove build deps
 RUN apk add --no-cache bash curl jq &&\
-  NGINX_VER="$(/get_nginx_latest_stable_version.sh)" &&\
-  rm /get_nginx_latest_stable_version.sh &&\
+  NGINX_VER="$(/get_nginx_latest_version.sh)" &&\
+  rm /get_nginx_latest_version.sh &&\
   apk del bash curl jq &&\
   apk add --no-cache build-base ca-certificates linux-headers openssl-dev pcre-dev wget zlib-dev musl openssl pcre zlib &&\
   wget -q "http://nginx.org/download/nginx-${NGINX_VER}.tar.gz" -O "/tmp/nginx-${NGINX_VER}.tar.gz" &&\
