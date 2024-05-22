@@ -1,24 +1,24 @@
 FROM mbentley/nginx:latest
 LABEL maintainer="Matt Bentley <mbentley@mbentley.net>"
 
-RUN apk add --no-cache bind-tools imagemagick php81 php81-bcmath php81-bz2 php81-ctype php81-curl php81-exif php81-fileinfo php81-gd php81-fpm php81-gettext php81-gmp php81-iconv php81-intl php81-imap php81-json php81-ldap php81-mbstring php81-mysqli php81-pecl-apcu php81-pecl-igbinary php81-pecl-imagick php81-pecl-memcached php81-pecl-redis php81-pdo php81-pdo_mysql php81-opcache php81-pdo_pgsql php81-pgsql php81-pcntl php81-posix php81-simplexml php81-xml php81-xmlreader php81-xmlwriter php81-zip s6 ssmtp wget whois &&\
-  apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community php81-pecl-mcrypt &&\
+RUN apk add --no-cache bind-tools imagemagick imagemagick-svg openssl php83 php83-bcmath php83-bz2 php83-ctype php83-curl php83-exif php83-fileinfo php83-gd php83-fpm php83-gettext php83-gmp php83-iconv php83-intl php83-imap php83-json php83-ldap php83-mbstring php83-mysqli php83-opcache php83-pecl-apcu php83-pecl-igbinary php83-pecl-imagick php83-pecl-memcached php83-pecl-redis php83-pdo php83-pdo_mysql php83-pdo_pgsql php83-phar php83-pgsql php83-pcntl php83-posix php83-simplexml php83-sodium php83-sysvsem php83-xml php83-xmlreader php83-xmlwriter php83-zip ssmtp wget whois &&\
+  apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community php83-pecl-mcrypt &&\
   mkdir /etc/supervisor.d &&\
-  sed -i 's/post_max_size = 8M/post_max_size = 16M/g' /etc/php81/php.ini &&\
-  sed -i "s#upload_max_filesize = 2M#upload_max_filesize = 8M#g" /etc/php81/php.ini &&\
-  sed -i "s#listen = 127.0.0.1:9000#listen = /var/run/php/php-fpm81.sock#g" /etc/php81/php-fpm.d/www.conf &&\
-  sed -i "s#^;listen.owner = nobody#listen.owner = www-data#g" /etc/php81/php-fpm.d/www.conf &&\
-  sed -i "s#^;listen.group = nobody#listen.group = www-data#g" /etc/php81/php-fpm.d/www.conf &&\
-  sed -i "s#^;listen.mode = 0660#listen.mode = 0660#g" /etc/php81/php-fpm.d/www.conf &&\
-  sed -i "s#^user = nobody#user = www-data#g" /etc/php81/php-fpm.d/www.conf &&\
-  sed -i "s#^group = nobody#group = www-data#g" /etc/php81/php-fpm.d/www.conf
+  sed -i 's/post_max_size = 8M/post_max_size = 16M/g' /etc/php83/php.ini &&\
+  sed -i "s#upload_max_filesize = 2M#upload_max_filesize = 8M#g" /etc/php83/php.ini &&\
+  sed -i "s#listen = 127.0.0.1:9000#listen = /var/run/php/php-fpm83.sock#g" /etc/php83/php-fpm.d/www.conf &&\
+  sed -i "s#^;listen.owner = nobody#listen.owner = www-data#g" /etc/php83/php-fpm.d/www.conf &&\
+  sed -i "s#^;listen.group = nobody#listen.group = www-data#g" /etc/php83/php-fpm.d/www.conf &&\
+  sed -i "s#^;listen.mode = 0660#listen.mode = 0660#g" /etc/php83/php-fpm.d/www.conf &&\
+  sed -i "s#^user = nobody#user = www-data#g" /etc/php83/php-fpm.d/www.conf &&\
+  sed -i "s#^group = nobody#group = www-data#g" /etc/php83/php-fpm.d/www.conf
 
-ENV FASTCGI_PASS="unix:/var/run/php/php-fpm81.sock"
+ENV FASTCGI_PASS="unix:/var/run/php/php-fpm83.sock"
 COPY default /etc/nginx/sites-available/default
 COPY s6 /etc/s6
 
 RUN mkdir /var/run/php &&\
-  chown -R www-data:www-data /var/log/php81 /var/run/php
+  chown -R www-data:www-data /var/log/php83 /var/run/php
 
 EXPOSE 80
 CMD ["s6-svscan","/etc/s6"]
