@@ -13,11 +13,14 @@ RUN apk add --no-cache bash curl jq &&\
   NGINX_VER="$(/get_nginx_latest_version.sh)" &&\
   rm /get_nginx_latest_version.sh &&\
   apk del bash curl jq &&\
-  apk add --no-cache build-base ca-certificates linux-headers openssl-dev pcre-dev wget zlib-dev musl openssl pcre zlib &&\
+  apk add --no-cache build-base ca-certificates git linux-headers openssl-dev pcre-dev wget zlib-dev musl openssl pcre zlib &&\
   wget -q "http://nginx.org/download/nginx-${NGINX_VER}.tar.gz" -O "/tmp/nginx-${NGINX_VER}.tar.gz" &&\
   cd /tmp &&\
   tar zxvf "/tmp/nginx-${NGINX_VER}.tar.gz" &&\
   cd "/tmp/nginx-${NGINX_VER}" &&\
+  wget -q "https://gist.githubusercontent.com/mbentley/9ce3fab20404464da0fc73e3d811ccbc/raw/aca54d60b53b1aa6f732eb0477c1f3b8cdb5f47b/change_autoindex_to_120.patch" &&\
+  git apply change_autoindex_to_120.patch &&\
+  rm change_autoindex_to_120.patch &&\
   ./configure \
     --prefix=/etc/nginx \
     --sbin-path=/usr/sbin/nginx \
@@ -66,7 +69,7 @@ RUN apk add --no-cache bash curl jq &&\
   addgroup -g 33 www-data &&\
   adduser -D -u 33 -G www-data -s /sbin/nologin -H -h /var/cache/nginx www-data &&\
   chown -R www-data:www-data /var/www &&\
-  apk del build-base linux-headers openssl-dev pcre-dev wget zlib-dev
+  apk del build-base git linux-headers openssl-dev pcre-dev wget zlib-dev
 
 # include my default config files
 COPY nginx.conf php.conf /etc/nginx/
