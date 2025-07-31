@@ -79,7 +79,7 @@ COPY entrypoint.sh /entrypoint.sh
 # add an index.html
 RUN echo "hello-world!" > /var/www/index.html
 
-EXPOSE 80 443
+#EXPOSE 80 443
 #STOPSIGNAL SIGQUIT
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["nginx","-c","/etc/nginx/nginx.conf"]
